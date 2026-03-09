@@ -15,18 +15,18 @@
             <div class="flex-1">
                 <div class="flex items-center gap-3">
                     <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="Logo" class="w-10 h-10">
-                    <a class="text-2xl font-bold tracking-tighter text-gray-800">GitHub Issues Tracker</a>
+                    <a class="md:text-2xl text-[20px] font-bold tracking-tighter text-gray-800">GitHub Issues Tracker</a>
                 </div>
             </div>
             <div class="flex gap-4">
                 <div class="form-control flex-row gap-3">
 
-                    <input type="text" id="input-search" placeholder="Search issues..." class="input input-bordered w-48 md:w-96 h-12 bg-gray-50 border-gray-200 focus:bg-white transition-all duration-200" />
+                    <input type="text" id="input-search" placeholder="Search issues..." class="input input-bordered w-38 md:w-96 h-12 bg-gray-50 border-gray-200 focus:bg-white transition-all duration-200" />
 
-                    <button id="btn-search" class="btn btn-primary h-12 px-6 bg-indigo-600 border-none hover:bg-indigo-700 text-white font-bold shadow-md">+ New Issue</button>
+                    <button id="btn-search" class="btn btn-primary py-6 md:px-6 px-3 bg-indigo-600 border-none hover:bg-indigo-700 text-white font-bold shadow-md">+ New Issue</button>
                 </div>
     
-                <button onclick="logout()" class="btn btn-ghost btn-circle border-2 border-gray-300 hover:border-red-500 text-gray-400 hover:text-red-500 transition-all duration-200">
+                <button id="logOut" onclick="logout()" class="btn btn-ghost btn-circle border-2 border-gray-300 hover:border-red-500 text-gray-400 hover:text-red-500 transition-all duration-200">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
                 </button>
             </div>
@@ -101,6 +101,44 @@
                 </div>
             </div>
          </section>
+
+         <!-- modal part -->
+            <dialog id="issue-modal" class="modal">
+                <div class="modal-box w-11/12 max-w-3xl border-none shadow-3xl p-0 overflow-hidden rounded-xl bg-slate-300 shadow-lg">
+                    <div id="modal-content" class="p-8">
+                        <h2 id="issue-title" class="text-2xl font-bold text-gray-900 mb-4"></h2>
+                        <div class="flex flex-wrap items-center gap-3 mb-4">
+                            <span id="issue-status" class="badge bg-emerald-500 text-white border-none rounded-full px-4 py-2">Opened</span>
+                            <span id="issue-opened-by-date" class="text-sm text-gray-500"></span>
+                        </div>
+                        <div id="issue-tags-container" class="flex flex-wrap gap-2 mb-4">
+                            <span id="issue-tag-bug" class="badge bg-red-50 text-red-600 border border-red-200 rounded-full px-4 py-1 hidden">BUG</span>
+                            <span id="issue-tag-help-wanted" class="badge bg-amber-50 text-amber-600 border border-amber-200 rounded-full px-4 py-1 hidden">HELP WANTED</span>
+                            <span id="issue-tag-enhancement" class="badge bg-emerald-50 text-emerald-600 border border-emerald-200 rounded-full px-4 py-1 hidden">Enhancement</span>
+                        </div>
+                        <p id="issue-description" class="text-gray-600 mb-6 leading-relaxed"></p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-sm text-gray-500 mb-1">Assignee</p>
+                                <p id="issue-assignee" class="font-semibold text-gray-900"></p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500 mb-1">Priority</p>
+                                <span id="issue-priority" class="badge bg-red-500 text-white border-none rounded-full px-4 py-2 font-bold">HIGH</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-action p-8 border-t border-gray-50 flex justify-end bg-gray-50/50">
+                        <form method="dialog">
+                            <button id="modal-close-button" class="btn bg-[#4A00FF] hover:bg-[#3d00cc] border-none text-white px-10 h-14 rounded-2xl font-bold transition-all duration-300">Close</button>
+                        </form>
+                    </div>
+                </div>
+                <form method="dialog" class="modal-backdrop">
+                    <button>close</button>
+                </form>
+            </dialog>
+         
      </main>
     <script src="home.js"></script>
 </body>

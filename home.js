@@ -1,6 +1,7 @@
 const issuesCon = document.getElementById('issues-con');
 const issueCountEl = document.getElementById('issue-count');
 const loadingSpinner = document.getElementById('loadingSpinner');
+const issueModal = document.getElementById("issue-modal");
 
 const allBtn = document.getElementById('all-btn');
 const openBtn = document.getElementById('open-btn');
@@ -79,7 +80,8 @@ function displayCards(issues) {
         }
 
         const card = document.createElement('div');
-        card.className = `card p-4 shadow-2xl bg-white ${borderClass}`;
+        card.className = `card p-4 shadow-2xl bg-white ${borderClass} cursor-pointer`;
+        card.onclick = () => openIssueModal(issue?.id);
         card.innerHTML = `
             <div class="flex justify-between">
                 <img src="${statusImg}" alt="${isOpen ? 'open' : 'closed'}">
@@ -104,25 +106,65 @@ function displayCards(issues) {
 
 
 // search er jonne
-document.getElementById("btn-search").addEventListener("click", () =>{
-
+document.getElementById("btn-search").addEventListener("click", () => {
     const input = document.getElementById("input-search");
+    const searchValue = input.value.trim();
+    if (!searchValue) return;
 
-    const searchValue = input.value.trim().toLowerCase();
+    showLoading();
+    const url = `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${encodeURIComponent(searchValue)}`;
+    fetch("https://corsproxy.io/?" + encodeURIComponent(url))
+        .then((res) => res.json())
+        .then((data) => {
+            const issues = data.data || [];
+            displayCards(issues);
+        })
+        .finally(removeLoading);
+});
 
-    fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q={searchText}")
-    .then((res) => res.json())
-    .then((data) => {
+// function for modal
+async function openIssueModal(id) {
+    if (!id) return;
+    showLoading();
+    const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+    const res = await fetch('https://corsproxy.io/?' + encodeURIComponent(url));
+    const data = await res.json();
+    
+    const details = data.data;
+    displayModalInfo(details);
+    if (issueModal) issueModal.showModal();
+    removeLoading();
+}
+function displayModalInfo(info) {
+    const statusEl = document.getElementById('issue-status');
+    const openedByEl = document.getElementById('issue-opened-by-date');
+    const tagBug = document.getElementById('issue-tag-bug');
+    const tagHelp = document.getElementById('issue-tag-help-wanted');
+    const tagEnhancement = document.getElementById('issue-tag-enhancement');
 
-        const allWords = data.data;
+    document.getElementById('issue-title').innerText = info?.title || 'Untitled';
+    document.getElementById('issue-description').innerText = info?.description || '';
+    document.getElementById('issue-assignee').innerText = info?.assignee || info?.author || 'Unassigned';
+    document.getElementById('issue-priority').innerText = (info?.priority || 'HIGH').toUpperCase();
 
-        const filterWord = allWords.filter(word =>
-            word.word && word.word.toLowerCase().includes(searchValue)
-        );
+    const isOpen = info?.status?.toLowerCase() === 'open';
+    if (statusEl) {
+        statusEl.textContent = isOpen ? 'Opened' : 'Closed';
+        statusEl.className = isOpen ? 'badge bg-emerald-500 text-white border-none rounded-full px-4 py-2' : 'badge bg-indigo-500 text-white border-none rounded-full px-4 py-2';
+    }
+    const author = info?.author || 'Unknown';
+    const dateStr = info?.createdAt ? new Date(info.createdAt).toLocaleDateString() : '';
+    if (openedByEl) openedByEl.textContent = `Opened by ${author} • ${dateStr}`;
 
-        displayLevelWord(filterWord);
-    });
+    const priority = (info?.priority || '').toLowerCase();
+    if (tagBug) tagBug.classList.toggle('hidden', priority !== 'high' && priority !== 'medium');
+    if (tagHelp) tagHelp.classList.toggle('hidden', priority !== 'high' && priority !== 'medium');
+    if (tagEnhancement) tagEnhancement.classList.toggle('hidden', priority !== 'low');
+}
 
+// for logout
+document.getElementById('logOut').addEventListener('click', function(){
+    window.location.assign("login.html");
 });
 
 loadCard();
