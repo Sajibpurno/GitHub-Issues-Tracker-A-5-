@@ -9,12 +9,16 @@ const closeBtn = document.getElementById('close-btn');
 
 let allIssues = [];
 
-function showLoading(){
-    loadingSpinner.classList.remove("hidden");
- };
- function removeLoading(){
-    loadingSpinner.classList.add("hidden");
- };
+function showLoading() {
+    if (loadingSpinner) {
+        loadingSpinner.classList.remove("hidden");
+    }
+}
+function removeLoading() {
+    if (loadingSpinner) {
+        loadingSpinner.classList.add("hidden");
+    }
+}
 
 function toggleBtn(id) {
     // sob button theke blue remove, white add
@@ -164,7 +168,7 @@ function displayModalInfo(info) {
 
 // for logout
 document.getElementById('logOut').addEventListener('click', function(){
-    window.location.assign("index.html");
+    window.location.assign("login.html");
 });
 
 loadCard();

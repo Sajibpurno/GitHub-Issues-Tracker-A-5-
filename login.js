@@ -13,7 +13,7 @@ document.getElementById('login-btn').addEventListener('click', function(){
     if(user == 'admin' && pass == 'admin123')
     {
         localStorage.setItem("isLoggedIn", "true");  // home.js ei check kore
-        alert('signin Successful');
+        alert('Sign In Successful');
         window.location.href = "home.html";//home page ee dukai dibe
     }
     else{
