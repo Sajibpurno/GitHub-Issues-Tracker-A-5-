@@ -164,7 +164,7 @@ function displayModalInfo(info) {
 
 // for logout
 document.getElementById('logOut').addEventListener('click', function(){
-window.location.assign("index.html");
+    window.location.assign("login.html");
 });
 
 loadCard();
