@@ -33,15 +33,66 @@
     <!-- main part -->
      <main class=" container mx-auto">
 <!-- button part -->
-        <div class="bg-white rounded-lg shadow-sm border border-gray-100 mb-10 inline-flex gap-2 w-full py-4 mt-15 pl-4">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-100 mb-4 inline-flex gap-2 w-full py-4 mt-15 pl-4">
             <button class="border-gray-300 btn btn btn-ghost btn-lg bg-indigo-600 text-white hover:bg-indigo-700 px-10 h-14 rounded-xl font-bold" data-tab="all">All</button>
             <button class="tab-btn btn btn-ghost btn-lg text-gray-500 hover:bg-gray-100 px-10 h-14 rounded-xl font-bold border-gray-300" data-tab="open">Open</button>
             <button class="tab-btn btn btn-ghost btn-lg text-gray-500 hover:bg-gray-100 px-10 h-14 rounded-xl font-bold border-gray-300" data-tab="closed">Closed</button>
         </div>
 
         <!-- card section -->
-         <section>
-            
+         <section class="shadow-sm bg-white p-6 rounded-lg">
+            <div class="flex items-center justify-between gap-6">
+                
+                <div class="flex items-center gap-6">
+                    <div class="w-16 h-16 rounded-3xl bg-indigo-50 flex items-center justify-center">
+                        <img src="assets/Aperture.png" alt="" class="w-8 h-8 object-contain">
+                    </div>
+
+                    <div>
+                        <h2 class="text-2xl font-bold"><span id="issue-count">0</span> Issues</h2>
+                        <p class="text-gray-500">Track and manage your project issues</p>
+                    </div>
+                </div>
+
+
+                <div class="flex items-center gap-4 font-bold text-xs uppercase">
+                    <div class="flex items-center gap-2 text-emerald-600 bg-emerald-50 px-4 py-2 rounded-full">
+                        <img src="assets/Open-Status.png" alt="Open" class="w-4 h-4 object-contain">
+                        <span>Open</span>
+                    </div>
+
+                    <div class="flex items-center gap-2 text-indigo-600 bg-indigo-50 px-4 py-2 rounded-full">
+                        <img src="assets/Closed- Status .png" alt="Closed" class="w-4 h-4 object-contain">
+                        <span>Closed</span>
+                    </div>
+                </div>
+
+            </div>
+            <hr class="text-gray-300 my-6">
+
+
+            <!-- card -->
+            <div id="issues-con" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
+                <div class="card p-4 shadow-2xl bg-white">
+                    <!-- <div class="flex justify-between">
+                        <img src="assets/Open-Status.png" alt="open">
+                        <button class="btn text-red-500 rounded-full bg-[#FEECEC] px-[25px]">High</button>
+                    </div>
+                    <div class="my-3">
+                        <h2>Fix navigation menu on mobile devices</h2>
+                        <p class="line-clamp-2">The navigation menu doesn't collapse properly on mobile devices...</p>
+                    </div>
+                    <div class="gap-1 ">
+                        <button class="btn text-red-500 bg-[#FEECEC]  rounded-full">Bug</button>
+                        <button class="btn text-[#D97706] bg-[#FFF8DB] rounded-full">help wanted</button>
+                    </div>
+                    <hr class="text-gray-300 my-4">
+                    <div class="">
+                        <p>#1 by john_doe</p>
+                        <p>1/15/2024</p>
+                    </div> -->
+                </div>
+            </div>
          </section>
      </main>
     <script src="home.js"></script>
