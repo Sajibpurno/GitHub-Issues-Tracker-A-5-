@@ -20,9 +20,12 @@
             </div>
             <div class="flex gap-4">
                 <div class="form-control flex-row gap-3">
-                    <input type="text" id="search-input" placeholder="Search issues..." class="input input-bordered w-48 md:w-96 h-12 bg-gray-50 border-gray-200 focus:bg-white transition-all duration-200" />
-                    <button class="btn btn-primary h-12 px-6 bg-indigo-600 border-none hover:bg-indigo-700 text-white font-bold shadow-md">+ New Issue</button>
+
+                    <input type="text" id="input-search" placeholder="Search issues..." class="input input-bordered w-48 md:w-96 h-12 bg-gray-50 border-gray-200 focus:bg-white transition-all duration-200" />
+
+                    <button id="btn-search" class="btn btn-primary h-12 px-6 bg-indigo-600 border-none hover:bg-indigo-700 text-white font-bold shadow-md">+ New Issue</button>
                 </div>
+    
                 <button onclick="logout()" class="btn btn-ghost btn-circle border-2 border-gray-300 hover:border-red-500 text-gray-400 hover:text-red-500 transition-all duration-200">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
                 </button>
@@ -34,9 +37,9 @@
      <main class=" container mx-auto">
 <!-- button part -->
         <div class="bg-white rounded-lg shadow-sm border border-gray-100 mb-4 inline-flex gap-2 w-full py-4 mt-15 pl-4">
-            <button class="border-gray-300 btn btn btn-ghost btn-lg bg-indigo-600 text-white hover:bg-indigo-700 px-10 h-14 rounded-xl font-bold" data-tab="all">All</button>
-            <button class="tab-btn btn btn-ghost btn-lg text-gray-500 hover:bg-gray-100 px-10 h-14 rounded-xl font-bold border-gray-300" data-tab="open">Open</button>
-            <button class="tab-btn btn btn-ghost btn-lg text-gray-500 hover:bg-gray-100 px-10 h-14 rounded-xl font-bold border-gray-300" data-tab="closed">Closed</button>
+            <button id="all-btn" onclick="toggleBtn('all-btn')" class="border-gray-300 btn btn-ghost btn-lg bg-[#4A00FF] text-gray-500 px-10 h-14 rounded-xl font-bold">All</button>
+            <button id="open-btn" onclick="toggleBtn('open-btn')" class="btn btn btn-ghost btn-lg text-gray-500 px-10 h-14 rounded-xl font-bold border-gray-300">Open</button>
+            <button id="close-btn" onclick="toggleBtn('close-btn')" class="btn btn btn-ghost btn-lg text-gray-500 px-10 h-14 rounded-xl font-bold border-gray-300">Closed</button>
         </div>
 
         <!-- card section -->
@@ -91,6 +94,10 @@
                         <p>#1 by john_doe</p>
                         <p>1/15/2024</p>
                     </div> -->
+                </div>
+                <!-- loading spinner -->
+                <div id="loadingSpinner" class=" hidden h-[60h] flex justify-center items-center">
+                    <span class="loading loading-spinner loading-xl"></span>
                 </div>
             </div>
          </section>

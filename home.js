@@ -1,16 +1,53 @@
 const issuesCon = document.getElementById('issues-con');
 const issueCountEl = document.getElementById('issue-count');
+const loadingSpinner = document.getElementById('loadingSpinner');
+
+const allBtn = document.getElementById('all-btn');
+const openBtn = document.getElementById('open-btn');
+const closeBtn = document.getElementById('close-btn');
+
+let allIssues = [];
+
+function showLoading(){
+    loadingSpinner.classList.remove("hidden");
+ };
+ function removeLoading(){
+    loadingSpinner.classList.add("hidden");
+ };
+
+function toggleBtn(id) {
+    // sob button theke blue remove, white add
+    [allBtn, openBtn, closeBtn].forEach(btn => {
+        if (!btn) return;
+        btn.classList.remove('bg-[#4A00FF]', 'text-white');
+        btn.classList.add('bg-white', 'text-gray-500');
+    });
+
+    const selected = document.getElementById(id);
+    if (selected) {
+        selected.classList.remove('bg-white', 'text-gray-500');
+        selected.classList.add('bg-[#4A00FF]', 'text-white');
+    }
+
+    // filter data by status
+    let filtered = allIssues;
+    if (id === 'open-btn') {
+        filtered = allIssues.filter(issue => issue?.status?.toLowerCase() === 'open');
+    } else if (id === 'close-btn') {
+        filtered = allIssues.filter(issue => issue?.status?.toLowerCase() === 'closed');
+    }
+
+    displayCards(filtered);
+}
+
 
 async function loadCard() {
-    try {
-        const res = await fetch('https://corsproxy.io/?' + encodeURIComponent('https://phi-lab-server.vercel.app/api/v1/lab/issues'));
-        const data = await res.json();
-        const issues = data?.data || [];
-        displayCards(issues);
-    } catch (err) {
-        console.error('Failed to load issues:', err);
-        if (issuesCon) issuesCon.innerHTML = '<p class="text-red-500 p-4">Failed to load issues. Please try again.</p>';
-    }
+    showLoading();
+    const res = await fetch('https://corsproxy.io/?' + encodeURIComponent('https://phi-lab-server.vercel.app/api/v1/lab/issues'));
+    const data = await res.json();
+    allIssues = data.data || [];
+    removeLoading();
+    displayCards(allIssues);
 }
 
 function displayCards(issues) {
@@ -64,5 +101,28 @@ function displayCards(issues) {
         issuesCon.appendChild(card);
     });
 }
+
+
+// search er jonne
+document.getElementById("btn-search").addEventListener("click", () =>{
+
+    const input = document.getElementById("input-search");
+
+    const searchValue = input.value.trim().toLowerCase();
+
+    fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q={searchText}")
+    .then((res) => res.json())
+    .then((data) => {
+
+        const allWords = data.data;
+
+        const filterWord = allWords.filter(word =>
+            word.word && word.word.toLowerCase().includes(searchValue)
+        );
+
+        displayLevelWord(filterWord);
+    });
+
+});
 
 loadCard();
